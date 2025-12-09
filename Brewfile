@@ -12,6 +12,7 @@ brew 'neovim'
 brew 'postgresql@18'
 brew 'spaceman-diff'
 brew 'spark'
+brew 'ripgrep'
 brew 'wget'
 brew 'yt-dlp'
 
