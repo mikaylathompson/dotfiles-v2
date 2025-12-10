@@ -1,0 +1,54 @@
+#!/bin/bash
+
+set -e
+
+echo "=== Dev Environment Bootstrap ==="
+echo
+
+# Install Claude Code if not installed
+if ! command -v claude &> /dev/null; then
+    echo "Installing Claude Code..."
+    curl -fsSL https://storage.googleapis.com/anthropic-release-public/claude-cli/install.sh | sh
+    echo "✓ Claude Code installed"
+else
+    echo "✓ Claude Code already installed"
+fi
+echo
+
+# Setup Neovim with NvChad
+if [ ! -d "$HOME/.config/nvim" ]; then
+    echo "Setting up NvChad..."
+    git clone https://github.com/NvChad/starter "$HOME/.config/nvim"
+    
+    # Run nvim to trigger lazy.nvim plugin installation, then run MasonInstallAll
+    echo "Installing plugins and LSP servers..."
+    nvim --headless "+Lazy! sync" +qa
+    nvim --headless "+MasonInstallAll" +qa
+    
+    # Delete .git folder
+    rm -rf "$HOME/.config/nvim/.git"
+    echo "✓ NvChad setup complete"
+else
+    echo "✓ Neovim config already exists"
+fi
+echo
+
+# Setup Oh My Zsh
+if [ ! -d "$HOME/.dotfiles/zsh/.oh-my-zsh" ]; then
+    echo "Installing Oh My Zsh..."
+    
+    # Create directory if it doesn't exist
+    mkdir -p "$HOME/.dotfiles/zsh"
+    
+    # Download and run installer with custom directory
+    export ZSH="$HOME/.dotfiles/zsh/.oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended --keep-zshrc
+    
+    echo "✓ Oh My Zsh installed to $ZSH"
+    echo "  Remember to update your .zshrc to use: export ZSH=\"$HOME/.dotfiles/zsh/.oh-my-zsh\""
+else
+    echo "✓ Oh My Zsh already installed"
+fi
+echo
+
+echo "=== Bootstrap Complete ==="

@@ -9,6 +9,18 @@ HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 
+ZSH_THEME=""
+DISABLE_UNTRACKED_FILES_DIRTY="true"
+HIST_STAMPS="yyyy-mm-dd"
+plugins=(git gh macos)
+
+old_zsh=$ZSH
+ZSH=$ZSH/zsh/.oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+ZSH=$old_zsh
+
+STARSHIP_CONFIG=/Users/mikayla/.dotfiles/starship/starship.toml
+
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP
 setopt NO_LIST_BEEP
