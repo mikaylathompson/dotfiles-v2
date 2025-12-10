@@ -5,3 +5,4 @@ alias cls='clear' # Good 'ol Clear Screen command
 alias la='ls -lAh'
 
 alias gs='git status'
+alias gcob='git checkout -b'

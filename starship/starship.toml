@@ -12,9 +12,17 @@ $docker_context\
 $directory\
 [ ](fg:#DA627D)\
 """
+#right_format = "[◀︎](fg:#06969A)$git_metrics"
+
+continuation_prompt = "[ ](fg:#DA627D)"
 
 # Disable the blank line at the start of the prompt
 # add_newline = false
+
+[git_metrics]
+added_style = 'bold blue'
+format = '[+$added]($added_style)/[-$deleted]($deleted_style) '
+disabled = false
 
 # You can also replace your username with a neat symbol like   or disable this
 # and use the os module below

@@ -12,14 +12,14 @@ SAVEHIST=10000
 ZSH_THEME=""
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 HIST_STAMPS="yyyy-mm-dd"
-plugins=(git gh macos)
+plugins=(git gh macos gh gitfast)
 
 old_zsh=$ZSH
 ZSH=$ZSH/zsh/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 ZSH=$old_zsh
 
-STARSHIP_CONFIG=/Users/mikayla/.dotfiles/starship/starship.toml
+export STARSHIP_CONFIG=/Users/mikayla/.dotfiles/starship/starship.toml
 
 setopt NO_BG_NICE # don't nice background tasks
 setopt NO_HUP
@@ -39,9 +39,8 @@ setopt INC_APPEND_HISTORY SHARE_HISTORY  # adds history incrementally and share 
 setopt HIST_IGNORE_ALL_DUPS  # don't record dupes in history
 setopt HIST_REDUCE_BLANKS
 
-# don't expand aliases _before_ completion has finished
-#   like: git comm-[tab]
-setopt complete_aliases
+# allow aliases to inherit completion from underlying commands
+unsetopt complete_aliases
 
 bindkey '^[^[[D' backward-word
 bindkey '^[^[[C' forward-word
@@ -49,3 +48,4 @@ bindkey '^[[5D' beginning-of-line
 bindkey '^[[5C' end-of-line
 bindkey '^[[3~' delete-char
 bindkey '^?' backward-delete-char
+
