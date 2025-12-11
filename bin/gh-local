@@ -1,0 +1,105 @@
+#!/bin/sh
+#
+# Take a github link and open it in your editor locally.
+# Checks the current directory for the repository, then ~/code and ~ for the repository.
+# USAGE:
+#
+#   $ gh-local https://github.com/mikaylathompson/dotfiles-v2/blob/main/bin/gh-local
+#   # => opens bin/gh-local in the dotfiles-v2 repository in your editor
+#   $ gh-local https://github.com/mikaylathompson/dotfiles-v2/blob/main/bin/gh-local#L123
+#   # => opens bin/gh-local in the dotfiles-v2 repository in your editor at line 123
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: gh-local <github-url>"
+  echo "Example: gh-local https://github.com/owner/repo/blob/main/path/to/file"
+  exit 1
+fi
+
+url="$1"
+echo "Parsing URL: $url"
+
+# Extract line number from anchor (e.g., #L123 or #L123-L456)
+line_number=""
+case "$url" in
+  *"#L"*)
+    anchor="${url#*#L}"
+    line_number="${anchor%%-*}"  # Get first number if it's a range
+    echo "Extracted line number: $line_number"
+    ;;
+esac
+
+# Strip any anchors from URL
+url="${url%%#*}"
+
+# Remove the https://github.com/ prefix
+path="${url#https://github.com/}"
+
+# Extract components
+# Format: owner/repo/blob/branch/path/to/file
+repo=$(echo "$path" | cut -d'/' -f2)
+branch=$(echo "$path" | cut -d'/' -f4)
+# File path is everything after blob/branch (fields 3 and 4)
+filepath=$(echo "$path" | cut -d'/' -f5-)
+
+echo "Repository: $repo"
+echo "File path: $filepath"
+
+if [ -z "$repo" ]; then
+  echo "Error: Could not parse repository from URL"
+  exit 1
+fi
+
+if [ -z "$filepath" ]; then
+  echo "Error: Could not parse file path from URL"
+  echo "Expected format: https://github.com/owner/repo/blob/branch/path/to/file"
+  exit 1
+fi
+
+# Search for the repository in the specified locations
+repo_path=""
+search_locations=""
+
+# First, check if current directory IS the repository
+current_dir_name=$(basename "$(pwd)")
+if [ "$current_dir_name" = "$repo" ]; then
+  repo_path="$(pwd)"
+  echo "Found repository at current directory: $repo_path"
+fi
+
+# If not found, search in standard locations
+if [ -z "$repo_path" ]; then
+  for search_dir in "$(pwd)" "$HOME/code" "$HOME"; do
+    candidate="$search_dir/$repo"
+    search_locations="$search_locations\n  - $candidate"
+    if [ -d "$candidate" ]; then
+      repo_path="$candidate"
+      echo "Found repository at: $repo_path"
+      break
+    fi
+  done
+fi
+
+if [ -z "$repo_path" ]; then
+  echo "Error: Could not find repository '$repo'"
+  echo "Searched in:$search_locations"
+  exit 1
+fi
+
+full_path="$repo_path/$filepath"
+
+if [ ! -e "$full_path" ]; then
+  echo "Error: File not found: $full_path"
+  echo "Note: The file may be on a different branch locally"
+  echo "The github link was for branch: $branch"
+  exit 1
+fi
+
+echo "Opening: $full_path"
+
+# Open with line number if available (vim-style +N argument)
+if [ -n "$line_number" ]; then
+  exec "$EDITOR" "+$line_number" "$full_path"
+else
+  exec "$EDITOR" "$full_path"
+fi

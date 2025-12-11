@@ -63,3 +63,7 @@ brew upgrade
 # Install software
 echo "› script/install"
 $ZSH/script/install
+
+# Install extras
+echo "› script/extras"
+$ZSH/script/extras

@@ -1,4 +1,7 @@
 autoload colors && colors
+# I pretty much overwrite this with starship, but I like it as a backup
+# when that config gets messed up.
+
 # cheers, @ehrenmurdick
 # http://github.com/ehrenmurdick/config/blob/master/zsh/prompt.zsh
 

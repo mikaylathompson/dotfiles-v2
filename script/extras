@@ -51,4 +51,24 @@ else
 fi
 echo
 
-echo "=== Bootstrap Complete ==="
+# Setup Starship
+if ! command -v starship &> /dev/null; then
+    echo "Installing Starship..."
+    curl -fsSL https://starship.rs/install.sh | sh
+    echo "✓ Starship installed"
+else
+    echo "✓ Starship already installed"
+fi
+echo
+
+# Setup uv
+if ! command -v uv &> /dev/null; then
+    echo "Installing uv..."
+    curl -fsSL https://astral.sh/uv/install.sh | sh
+    echo "✓ uv installed"
+else
+    echo "✓ uv already installed"
+fi
+echo
+
+echo "=== Extras Complete ==="
