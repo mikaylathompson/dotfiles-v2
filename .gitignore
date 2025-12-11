@@ -1,3 +1,4 @@
 git/gitconfig.local.symlink
 Brewfile.lock.json
 zsh/.oh-my-zsh
+.claude/

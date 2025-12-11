@@ -2,7 +2,7 @@
   "includeCoAuthoredBy": false,
   "statusLine": {
     "type": "command",
-    "command": "/bin/bash /Users/mikayla/.claude/statusline-command.sh"
+    "command": "$HOME/.dotfiles/claude/statusline.sh"
   },
   "enabledPlugins": {
     "hookify@claude-code-plugins": true,
