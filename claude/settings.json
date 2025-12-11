@@ -1,0 +1,14 @@
+{
+  "includeCoAuthoredBy": false,
+  "statusLine": {
+    "type": "command",
+    "command": "/bin/bash /Users/mikayla/.claude/statusline-command.sh"
+  },
+  "enabledPlugins": {
+    "hookify@claude-code-plugins": true,
+    "pr-review-toolkit@claude-code-plugins": true,
+    "code-review@claude-code-plugins": true,
+    "feature-dev@claude-code-plugins": true
+  },
+  "alwaysThinkingEnabled": false
+}
