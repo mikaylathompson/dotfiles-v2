@@ -4,6 +4,7 @@ alias la='ls -lAh'
 
 alias gs='git status'
 alias gcob='git checkout -b'
+alias grc='git recent-og'
 
 alias zzz='pmset sleepnow'
 alias zzzscreen='pmset displaysleepnow'

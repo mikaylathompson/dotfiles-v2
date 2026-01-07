@@ -30,6 +30,8 @@
 	<string>https://api.openai.com/v1/responses</string>
 	<key>CloseBookmarksWindowAfterOpening</key>
 	<true/>
+	<key>CopySelection</key>
+	<false/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>Lab Fox</key>
@@ -865,7 +867,7 @@
 	<key>IRMemory</key>
 	<integer>4</integer>
 	<key>LeftTabBarWidth</key>
-	<real>192</real>
+	<real>249</real>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -1543,14 +1545,16 @@
 			</dict>
 			<key>Bold Color (Light)</key>
 			<dict>
+				<key>Alpha Component</key>
+				<real>1</real>
 				<key>Blue Component</key>
-				<real>0.94509803921569002</real>
+				<real>0.64313725490196083</real>
 				<key>Color Space</key>
-				<string>sRGB</string>
+				<string>P3</string>
 				<key>Green Component</key>
-				<real>0.94509803921569002</real>
+				<real>0.13990928845765113</real>
 				<key>Red Component</key>
-				<real>0.94509803921569002</real>
+				<real>0.16567883581158033</real>
 			</dict>
 			<key>Character Encoding</key>
 			<integer>4</integer>
@@ -3111,7 +3115,7 @@
 	<key>VisualIndicatorForEsc</key>
 	<false/>
 	<key>findMode_iTerm</key>
-	<integer>0</integer>
+	<integer>2</integer>
 	<key>kCPKSelectionViewPreferredModeKey</key>
 	<integer>1</integer>
 	<key>kCPKSelectionViewShowHSBTextFieldsKey</key>
