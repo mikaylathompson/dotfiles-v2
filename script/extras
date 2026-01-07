@@ -13,6 +13,27 @@ if ! command -v claude &> /dev/null; then
 else
     echo "✓ Claude Code already installed"
 fi
+
+# Setup Claude Code config symlinks
+mkdir -p "$HOME/.claude"
+if [ ! -L "$HOME/.claude/settings.json" ]; then
+    ln -sf "$HOME/.dotfiles/claude/settings.json" "$HOME/.claude/settings.json"
+    echo "✓ Linked Claude settings.json"
+else
+    echo "✓ Claude settings.json already linked"
+fi
+if [ ! -L "$HOME/.claude/commands" ]; then
+    ln -sf "$HOME/.dotfiles/claude/commands" "$HOME/.claude/commands"
+    echo "✓ Linked Claude commands"
+else
+    echo "✓ Claude commands already linked"
+fi
+if [ ! -L "$HOME/.claude/CLAUDE.md" ]; then
+    ln -sf "$HOME/.dotfiles/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+    echo "✓ Linked Claude CLAUDE.md"
+else
+    echo "✓ Claude CLAUDE.md already linked"
+fi
 echo
 
 # Setup Neovim with NvChad
