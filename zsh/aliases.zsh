@@ -17,4 +17,8 @@ alias exattt='eza -T -L 4'
 alias exatttt='eza -T'
 alias lx='eza -al'
 
+
+# Restore ctrl-z in claude code: https://github.com/anthropics/claude-code/issues/16727
+alias cc='env -u TERM_PROGRAM -u TERM_PROGRAM_VERSION TERM=xterm-256color claude'
+
 function makegif(){ ffmpeg -i $@ -s 600x400 -pix_fmt rgb8 -r 10 -f gif - | gifsicle --optimize=3 --delay=4 > "$@.gif" }

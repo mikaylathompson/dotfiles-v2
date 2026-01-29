@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# pr-notify - Watch GitHub PR checks and notify on completion
+
+if [ -z "$1" ]; then
+    echo "Usage: pr-notify <PR-number|PR-URL>"
+    echo "Examples:"
+    echo "  pr-notify 3002"
+    echo "  pr-notify https://github.com/ranger-testing/lavender-core/pull/3022"
+    exit 1
+fi
+
+# Extract PR number and repo from argument
+if [[ "$1" =~ ^https://github.com/([^/]+)/([^/]+)/pull/([0-9]+) ]]; then
+    # Full URL provided
+    OWNER="${BASH_REMATCH[1]}"
+    REPO="${BASH_REMATCH[2]}"
+    PR_NUMBER="${BASH_REMATCH[3]}"
+    PR_URL="$1"
+elif [[ "$1" =~ ^[0-9]+$ ]]; then
+    # Just a PR number - use current repo
+    PR_NUMBER="$1"
+    # Get current repo info
+    REPO_INFO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
+    PR_URL="https://github.com/${REPO_INFO}/pull/${PR_NUMBER}"
+else
+    echo "Error: Invalid PR number or URL"
+    exit 1
+fi
+
+echo "Watching PR #${PR_NUMBER}..."
+echo "URL: ${PR_URL}"
+
+# Watch the PR checks
+gh pr checks "${PR_NUMBER}" --watch
+
+# Send macOS notification that opens PR when clicked
+osascript <<EOF
+display notification "Checks complete" with title "PR #${PR_NUMBER}" sound name "Glass"
+tell application "System Events"
+    set notificationAppId to "Script Editor"
+end tell
+EOF
+
+# Open the PR in browser
+open "${PR_URL}"
